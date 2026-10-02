@@ -1,7 +1,7 @@
 {
   "id": "instructions-loaded-log",
-  "summary": "Logs every instruction file Claude Code loads (CLAUDE.md and others), so you can check whether a rule was in context.",
-  "doc": "This InstructionsLoaded hook appends one tab-separated line per loaded instruction file to <config>/guardhooks/state/instructions-loaded.log: the first eight characters of the session id, the file path, the load reason, the memory type and the UTC time. When a model seems to ignore a rule, the first question is whether the rule was loaded at all, and transcripts do not record the CLAUDE.md injection. Count sessions against loads of a given file to get its load rate. The log is trimmed to its last 10,000 lines once it passes 20,000. It prints nothing and blocks nothing.",
+  "summary": "Logs each instruction file Claude Code loads, including CLAUDE.md files, so you can verify which rules entered the context.",
+  "doc": "This InstructionsLoaded hook appends one tab-separated line for each loaded instruction file to <config>/guardhooks/state/instructions-loaded.log. Each line contains the first eight characters of the session id, the file path, the load reason, the memory type, and the UTC time. When a model seems to ignore a rule, the log shows whether the rule loaded. Transcripts do not record the CLAUDE.md injection. Count sessions against loads of a given file to calculate its load rate. The hook trims the log to its last 10,000 lines after it passes 20,000 lines. It prints nothing and blocks nothing.",
   "hooks": [
     { "event": "InstructionsLoaded", "script": "instructions-loaded-log.py", "timeout": 5 }
   ]

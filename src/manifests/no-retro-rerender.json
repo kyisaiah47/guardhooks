@@ -1,7 +1,7 @@
 {
   "id": "no-retro-rerender",
-  "summary": "Blocks code and commands that send already-shipped assets back through a generator so they match a newer style.",
-  "doc": "This hook denies a Write, Edit, MultiEdit, NotebookEdit or Bash call that sends already-shipped work back to a generator: a backfill over historical rows, a loop over every existing image, cover, card or film that draws each one again, a cleared asset field left for the next sync to fill, or a redraw aimed at a new house style. Old work keeps the style it shipped with, and a silent backfill replaces assets people already saw and approved. Generating an asset for something that never had one, pointing at a file that already exists, and retiring an old asset in place are all allowed. To quote a banned line on purpose, put it in a fenced code block, an inline backtick span or a '>' blockquote inside a Markdown or text file. The hook's own files, CLAUDE.md and AGENTS.md are exempt.",
+  "summary": "Blocks code and commands that send shipped assets through a generator to match a newer style.",
+  "doc": "This hook denies a Write, Edit, MultiEdit, NotebookEdit or Bash call that sends shipped work through a generator. It checks backfills over historical rows, loops over every existing image, cover, card or film, cleared asset fields left for the next sync, and redraws aimed at a new house style. Old work keeps the style it shipped with. A silent backfill replaces assets that people already saw and approved. The hook allows an asset for something that never had one, a reference to an existing file and retirement of an old asset in place. Put a quoted banned line in a fenced code block, an inline backtick span or a '>' blockquote inside a Markdown or text file. The hook's own files, CLAUDE.md and AGENTS.md are exempt.",
   "hooks": [
     { "event": "PreToolUse", "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash", "script": "no-retro-rerender.py", "timeout": 10 }
   ]

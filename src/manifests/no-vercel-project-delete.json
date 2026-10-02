@@ -1,7 +1,7 @@
 {
   "id": "no-vercel-project-delete",
-  "summary": "Blocks any write or shell command that deletes a Vercel project, through the CLI or a REST DELETE.",
-  "doc": "This hook denies a Write, Edit, MultiEdit, NotebookEdit or Bash call that deletes a Vercel project: the rm subcommand of the Vercel CLI's project command, or a REST DELETE against /vN/projects/ followed by the project id alone. An automated cleanup that deletes projects reports success and errors on nothing, and a project created today has no custom domain yet, so no age, traffic or name rule makes automated deletion safe. Deleting a project is a decision a person makes by hand. A DELETE against a subresource (env, domains, alias, link) and a GET of the project are allowed. To mention the command on purpose, put it on a comment line (# or //): comment lines are not scanned.",
+  "summary": "The hook blocks writes and shell commands that delete a Vercel project through the CLI or a REST DELETE.",
+  "doc": "This hook denies a Write, Edit, MultiEdit, NotebookEdit or Bash call that deletes a Vercel project. It blocks the rm subcommand of the Vercel CLI's project command and a REST DELETE against /vN/projects/ followed by the project id alone. An automated cleanup can report success without errors, and a project created today has no custom domain yet, so age, traffic and name rules cannot make automated deletion safe. A person must decide whether to delete a project. A DELETE against a subresource, including env, domains, alias or link, and a GET of the project are allowed. To mention the command on purpose, put it on a comment line, using # or //, because comment lines are not scanned.",
   "hooks": [
     { "event": "PreToolUse", "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash", "script": "no-vercel-project-delete.py", "timeout": 10 }
   ]

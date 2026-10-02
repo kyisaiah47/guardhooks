@@ -1,7 +1,7 @@
 {
   "id": "no-silent-substitution",
-  "summary": "Denies the first generator command of a turn whose prompt named existing inputs, so new output is not passed off as the named thing.",
-  "doc": "This PreToolUse hook watches shell commands for generators: scripts and APIs that make a new image, video or text from a prompt. When the turn's prompt named existing inputs (\"use these\", \"2 and 3\", a file name) and a generator is about to run, it denies the first such call and says to use the named inputs, or to say first that the request cannot be done with them. Running the same command again in the same turn goes through, and substitution-disclosure-stop then checks the reply. A generator with no named inputs gets a short reminder and is never denied. A generator's name inside a heredoc body is not a call. Your own generator entry points can go in <config>/guardhooks/generator-commands.txt, one regex per line.",
+  "summary": "Denies the first generator command in a turn when the prompt names existing inputs, so new output cannot replace the named inputs without disclosure.",
+  "doc": "This PreToolUse hook watches shell commands for generators, including scripts and APIs that create a new image, video or text from a prompt. When the prompt names existing inputs, such as \"use these\", \"2 and 3\" or a file name, and a generator is about to run, the hook denies the first call. The denial requires the command to use the named inputs or the reply to state first that the request cannot use them. A second generator command in the same turn passes. substitution-disclosure-stop then checks the reply. A generator with no named inputs receives a short reminder and passes. A generator name inside a heredoc body is not a call. Add custom generator entry points to <config>/guardhooks/generator-commands.txt, one regex per line.",
   "hooks": [
     {
       "event": "PreToolUse",

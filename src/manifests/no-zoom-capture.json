@@ -1,7 +1,7 @@
 {
   "id": "no-zoom-capture",
-  "summary": "Blocks animated zoom (Ken Burns, punch-in) on a captured page inside a screen-recording script.",
-  "doc": "This hook denies a write to a screen-recording script that animates a scale() on the captured page or screenshot: a transform with a transition, a keyframes block, requestAnimationFrame, a Web Animations scale tween, a GSAP scale tween, or a zoom keyword such as zoomTo or kenBurns. A recording should show the page at full width and scroll down it, and repeated zooms on the same screen read as filler. Only recorder files are checked (capture, record, shoot, screencast or demo-video paths, Playwright specs, or code that starts a screencast), so a button's hover scale in app code is never touched. A static scale(1) reset with no animation passes.",
+  "summary": "The hook blocks animated zoom, including Ken Burns and punch-in effects, on a captured page in a screen-recording script.",
+  "doc": "This hook denies a write to a screen-recording script that animates a scale() on the captured page or screenshot. It blocks a transform with a transition, a keyframes block, requestAnimationFrame, a Web Animations scale tween, a GSAP scale tween, or a zoom keyword such as zoomTo or kenBurns. A recording should show the page at full width and scroll down it because repeated zooms on the same screen add filler. The hook checks only recorder files in capture, record, shoot, screencast or demo-video paths, Playwright specs, or code that starts a screencast. A static scale(1) reset with no animation passes.",
   "hooks": [
     {
       "event": "PreToolUse",

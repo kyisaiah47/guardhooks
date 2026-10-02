@@ -1,7 +1,7 @@
 {
   "id": "no-claude-p-stop",
-  "summary": "Sends a chat reply back for a rewrite when it plans a headless Claude CLI call instead of the CLI you chose.",
-  "doc": "This Stop hook reads the reply the model is about to finish with and blocks it when a sentence plans a headless Claude CLI call, such as running claude -p over each file or a headless Claude judge. The model then rewrites the reply with the CLI named in the GUARDHOOKS_HEADLESS_CLI environment variable. It pairs with no-claude-p, which covers files and shell commands. A sentence about the rule passes when it also says not, never, instead, replaced, legacy or reports an error, and a sentence that names the chosen CLI passes. To quote the command on purpose, put it in a fenced code block, an inline backtick span, a '>' blockquote or a double-quoted span. The hook blocks at most once per turn.",
+  "summary": "Sends a chat reply back for rewriting when it plans a headless Claude CLI call instead of the selected CLI.",
+  "doc": "This Stop hook reads the reply before it ends and blocks it when a sentence plans a headless Claude CLI call, such as running claude -p over each file or a headless Claude judge. The hook sends the model back to rewrite the reply with the CLI named in the GUARDHOOKS_HEADLESS_CLI environment variable. It pairs with no-claude-p, which covers files and shell commands. A sentence about this rule passes when it also says not, never, instead, replaced, legacy, or reports an error. A sentence that names the selected CLI also passes. To quote the command, put it in a fenced code block, an inline backtick span, a '>' blockquote, or a double-quoted span. The hook blocks at most once per turn.",
   "hooks": [
     { "event": "Stop", "script": "no-claude-p-stop.py", "timeout": 15 }
   ]

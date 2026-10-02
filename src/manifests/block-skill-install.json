@@ -1,6 +1,6 @@
 {
   "id": "block-skill-install",
-  "summary": "Denies direct skill and plugin install commands so nothing lands in a skills folder unscanned.",
+  "summary": "Denies direct skill and plugin install commands before unscanned content reaches a skills folder.",
   "doc": "This PreToolUse hook denies shell commands that install a skill or plugin directly, such as the skills add and skills install commands of the skills CLI and the plugin install command of Claude Code. Community skills and plugins are untrusted input that runs with your local permissions and credentials. The denial explains the safe path: fetch the source into a scratch folder without running it, scan it with skill-scan (python3 skill-scan.py <dir>), then copy the folder into the skills folder by hand. Install skill-scan too if you want that copy checked automatically.",
   "hooks": [
     {

@@ -1,7 +1,7 @@
 {
   "id": "no-em-dash",
-  "summary": "Blocks em dashes, en dashes and `' -- '` used as a dash in any file write or shell command.",
-  "doc": "This hook denies a Write, Edit, MultiEdit, NotebookEdit or Bash call when the new text contains an em dash (U+2014), an en dash (U+2013), a horizontal bar (U+2015), a minus sign (U+2212), an escaped spelling such as `\\u2014` or `&mdash;`, or `' -- '` used as a dash in a prose file. Models reach for the em dash far more often than people do, and readers notice it. Only the new text is scanned, so existing files and reads are untouched, and a grep for the character or a sed that removes it is allowed. To quote a source that really contains one, put it in a fenced code block, an inline backtick span or a '>' blockquote.",
+  "summary": "Blocks em dashes, en dashes, and `' -- '` used as a dash in file writes and shell commands.",
+  "doc": "This hook denies a Write, Edit, MultiEdit, NotebookEdit, or Bash call when its new text contains an em dash (U+2014), en dash (U+2013), horizontal bar (U+2015), minus sign (U+2212), escaped spelling such as `\\u2014` or `&mdash;`, or `' -- '` used as a dash in a prose file. Models use the em dash more often than people do, and readers notice it. The hook scans only new text, so existing files and reads remain unaffected. A grep for the character or a sed that removes it is allowed. To quote a source that contains a dash, put it in a fenced code block, an inline backtick span, or a '>' blockquote.",
   "hooks": [
     {
       "event": "PreToolUse",

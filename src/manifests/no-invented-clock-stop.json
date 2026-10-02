@@ -1,7 +1,7 @@
 {
   "id": "no-invented-clock-stop",
-  "summary": "Sends a reply back when it states the current time, or minutes left, without a fresh clock reading.",
-  "doc": "This Stop hook compares every time the reply states as now (\"it's 7:36\", \"right now it is 14:05\") with the real instant that sentence was written, which the transcript records. A claim more than four minutes off is flagged. Deadline and elapsed-time arithmetic (\"we have 20 minutes left\") is flagged unless a clock reading such as date or Date.now() ran in the same turn within five minutes before it. Times in scheduled job names claim nothing about the present and pass. To quote a time instead of claiming it, put it in backticks, a '>' blockquote or double quotes. When the flagged times refer to something other than the present, run npx guardhooks declare no-invented-clock-stop \"<what these times refer to>\", which lasts two hours. The hook blocks at most once per turn and three times per session.",
+  "summary": "Sends a reply back when it states the current time or minutes left without a fresh clock reading.",
+  "doc": "This Stop hook compares every time stated as now, such as \"it's 7:36\" or \"right now it is 14:05\", with the instant when the sentence was written. It flags a claim that is more than four minutes off. It flags deadline and elapsed-time arithmetic, such as \"we have 20 minutes left\", unless date or Date.now() ran in the same turn within five minutes before it. Times in scheduled job names do not claim the present and pass. Put a quoted time in backticks, a '>' blockquote or double quotes when it is not a current-time claim. When a flagged time refers to something other than the present, run npx guardhooks declare no-invented-clock-stop \"<what these times refer to>\". The declaration lasts two hours. The hook blocks at most once per turn and three times per session.",
   "declare": true,
   "hooks": [
     {

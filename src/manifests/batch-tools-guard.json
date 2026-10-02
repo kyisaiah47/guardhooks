@@ -1,7 +1,7 @@
 {
   "id": "batch-tools-guard",
-  "summary": "After twelve tool calls in a row that each went alone in their own request, reminds the model to batch independent calls.",
-  "doc": "This PreToolUse hook counts consecutive tool calls that arrive alone. Every request re-sends the whole conversation, so a lone call costs the full context however small its result is, and two independent calls sent one after the other cost twice what they cost in one message. Calls in the same request reach the hook within milliseconds of each other, which resets the count. After twelve lone calls it adds a reminder to put independent calls in one message and chain related shell steps with &&. It never denies a call. Its counter lives in <config>/guardhooks/state/batch-tools-guard/.",
+  "summary": "After twelve consecutive tool calls arrive in separate requests, the hook tells the model to batch independent calls.",
+  "doc": "This PreToolUse hook counts consecutive tool calls that arrive alone. Each request resends the full conversation, so a lone call costs the full context even when its result is small. Two independent calls sent separately cost twice as much as the same calls in one request. Calls in one request reach the hook within milliseconds of each other and reset the count. After twelve lone calls, the hook tells the model to put independent calls in one message and chain related shell steps with &&. The hook never denies a call. Its counter lives in <config>/guardhooks/state/batch-tools-guard/.",
   "hooks": [
     {
       "event": "PreToolUse",

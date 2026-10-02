@@ -1,7 +1,7 @@
 {
   "id": "no-stat-eyebrow",
-  "summary": "Blocks the stat-eyebrow card: a giant number as the dominant type with a small all-caps tracked label beside it.",
-  "doc": "This hook denies a Write, Edit, MultiEdit or NotebookEdit that ships the stat-eyebrow card. In CSS that is a font size of 90px or more on a figure, next to an uppercase label tracked at 0.08em or more. In words it is a brief or prompt that asks for a big number, a stat card, a metric tile, or a figure under an eyebrow. The card is the most common template move in generated slides, covers and dashboards, and it makes a surface read as a template. Lead with a sentence instead and keep figures at body size inside it. A small tracked label on its own, a number inside a headline, and tables or charts at body size all pass. A file whose text names the rule (for example a style guide that says to never use a stat card) is treated as being about the ban and passes.",
+  "summary": "The hook blocks a stat-eyebrow card that uses a giant number as the dominant type beside a small all-caps tracked label.",
+  "doc": "This hook denies a Write, Edit, MultiEdit or NotebookEdit that ships the stat-eyebrow card. In CSS, the card has a font size of 90px or more on a figure beside an uppercase label tracked at 0.08em or more. The hook also treats a brief or prompt that asks for a big number, a stat card, a metric tile or a figure under an eyebrow as a stat-eyebrow request. The card is the most common template move in generated slides, covers and dashboards, and it makes a surface read as a template. Use a sentence instead and keep figures at body size inside it. A small tracked label on its own, a number inside a headline, and tables or charts at body size pass. A file that names the rule, such as a style guide that says to never use a stat card, passes because the file discusses the ban.",
   "hooks": [
     {
       "event": "PreToolUse",

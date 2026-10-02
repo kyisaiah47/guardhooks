@@ -1,7 +1,7 @@
 {
   "name": "guardhooks",
   "version": "0.1.0",
-  "description": "Claude Code hooks you install one at a time. Each hook blocks one kind of output, such as em dashes, filler copy, invented clock times, unsourced quotes or purchases.",
+  "description": "Claude Code hooks install one at a time. Each hook blocks one kind of output, such as em dashes, filler copy, invented clock times, unsourced quotes or purchases.",
   "type": "module",
   "bin": {
     "guardhooks": "src/cli.mjs"

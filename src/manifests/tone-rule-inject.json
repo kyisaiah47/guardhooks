@@ -1,7 +1,7 @@
 {
   "id": "tone-rule-inject",
-  "summary": "Adds a short reminder to every prompt: answer what the user asks, never comment on how they ask it.",
-  "doc": "This UserPromptSubmit hook adds a five-line reminder to every prompt. It says to respond to what the user is asking for and never to how they are asking it: no requests to drop swearing, no \"let's keep it civil\", no promises to keep helping regardless, no warnings about ending the conversation, and no quiet reduction in effort. Instruction files are read once at session start, so a rule added there does not reach a session that is already running, while this reminder arrives with each prompt. It blocks nothing. Pair it with tone-guard-stop, which catches a reply that breaks the rule.",
+  "summary": "The hook adds a reminder to every prompt to answer the request without commenting on how the user asks it.",
+  "doc": "This UserPromptSubmit hook adds a five-line reminder to every prompt. The reminder requires a response to what the user asks and prohibits responses about how the user asks it. It prohibits requests to drop swearing, \"let's keep it civil\", promises to keep helping regardless, warnings about ending the conversation, and quiet reductions in effort. Instruction files load once at session start, so a rule added there does not reach a session that is already running. This reminder arrives with each prompt. The hook blocks nothing. Pair it with tone-guard-stop, which catches a reply that breaks the rule.",
   "hooks": [
     { "event": "UserPromptSubmit", "script": "tone-rule-inject.py", "timeout": 5 }
   ]

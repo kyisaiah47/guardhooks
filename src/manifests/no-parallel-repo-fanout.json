@@ -1,7 +1,7 @@
 {
   "id": "no-parallel-repo-fanout",
-  "summary": "Denies shell loops that push, install, build or deploy many repos at once in the background.",
-  "doc": "This hook denies a Bash command that runs heavy per-repo work in parallel: a for or while loop that backgrounds git push, pull, fetch, clone or commit, npm, pnpm or yarn installs and builds, Playwright runs or deploy scripts with '&', or the same work under xargs -P or GNU parallel with more than one worker. Each of those can start its own hooks, node processes and browsers, so running dozens at once can make the machine unusable while every command still exits 0. A sequential loop passes, and so does any command whose only mention of these verbs is inside a heredoc, such as a commit message. When the user explicitly wants parallel runs, npx guardhooks declare no-parallel-repo-fanout \"<reason>\" allows them for two hours.",
+  "summary": "Denies shell loops that run push, install, build or deploy work for many repos in parallel.",
+  "doc": "This hook denies a Bash command that runs heavy work for multiple repos in parallel. It checks for loops that background git push, pull, fetch, clone or commit, npm, pnpm or yarn installs and builds, Playwright runs or deploy scripts with '&'. It also checks xargs -P and GNU parallel with more than one worker. Each job can start its own hooks, node processes and browsers, which can make the machine unusable while every command still exits 0. A sequential loop passes. A command whose only mention of these verbs is inside a heredoc, such as a commit message, also passes. When the user explicitly wants parallel runs, npx guardhooks declare no-parallel-repo-fanout \"<reason>\" allows them for two hours.",
   "declare": true,
   "hooks": [
     { "event": "PreToolUse", "matcher": "Bash", "script": "no-parallel-repo-fanout.py", "timeout": 5 }

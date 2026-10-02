@@ -1,7 +1,7 @@
 {
   "id": "same-style-means-match-the-source",
-  "summary": "When a prompt asks to match an existing artifact's style, adds a rule to work from its rendered frames.",
-  "doc": "This UserPromptSubmit hook fires when a prompt asks for something to look like, match, or use the same style as an artifact that already exists. It adds a rule to the model's context: open the reference's rendered output in this turn, reproduce its content model and not only its measurements, and put the reference and the output side by side before handing it over. The common failure copies the reference's spacing and font sizes while keeping a different content model, so the numbers match and the result does not. It never blocks, and it tolerates common typos of the word style.",
+  "summary": "The hook requires rendered frames from an existing artifact when a prompt asks for a matching style.",
+  "doc": "This UserPromptSubmit hook runs when a prompt asks for something to look like, match or use the same style as an existing artifact. It adds a rule to the model's context: open the reference's rendered output in this turn, reproduce its content model as well as its measurements, and put the reference beside the output before handing it over. The common failure copies the reference's spacing and font sizes while keeping a different content model, so the numbers match but the result does not. The hook never blocks and accepts common typos of the word style.",
   "hooks": [
     {
       "event": "UserPromptSubmit",

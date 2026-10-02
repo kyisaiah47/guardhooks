@@ -1,7 +1,7 @@
 {
   "id": "agent-status-must-be-measured",
-  "summary": "When the user asks about a subagent, reminds the model to check the agent's real status instead of narrating its brief.",
-  "doc": "This UserPromptSubmit hook adds a reminder when a prompt asks what an agent is doing, how long it has run, or whether it is stuck or still running. The brief the model wrote for an agent describes planned work, and repeating it back reads like a status report while being wrong as soon as the agent finished or stalled. The reminder tells the model to check status with the agent tools, read live progress or ask the agent, never to time an agent from a file's modification time, to look for live processes when the user says something is still running, and to say plainly when it cannot establish a fact. It blocks nothing.",
+  "summary": "When a user asks about a subagent, the hook tells the model to check the agent's current status instead of repeating its brief.",
+  "doc": "This UserPromptSubmit hook runs when a prompt asks what an agent is doing, how long it has run, or whether it is stuck or still running. An agent brief records planned work, so repeating it does not report the agent's current state. The hook tells the model to check the agent tools, read live progress, or ask the agent. It also tells the model not to measure runtime from a file's modification time, to check live processes when the user says an agent is still running, and to state when it cannot establish a fact. The hook blocks nothing.",
   "hooks": [
     { "event": "UserPromptSubmit", "script": "agent-status-must-be-measured.py", "timeout": 5 }
   ]

@@ -1,7 +1,7 @@
 {
   "id": "no-purchase-suggestion-stop",
-  "summary": "Sends a chat reply back for a rewrite when it offers to buy something, such as asking whether to grab the domain.",
-  "doc": "This Stop hook reads the reply the model is about to finish with and blocks it when the model offers to buy something: I'll buy it, want me to grab the domain, should I register it, approve the spend and similar first-person offers. The user makes every purchase by hand, and an offer costs them a round trip to decline. A price and availability report never fires, and neither does a sentence that says the user buys or that the model will not buy. It pairs with no-purchase, which covers the tool call itself. To quote an offer on purpose, put it in a fenced code block, an inline backtick span, a '>' blockquote or a double-quoted span of twelve characters or more. The hook blocks at most once per turn.",
+  "summary": "Sends a chat reply back for rewriting when it offers to buy something, such as asking whether to grab the domain.",
+  "doc": "This Stop hook blocks a reply that offers to buy something, including \"I'll buy it\", \"want me to grab the domain\" and \"should I register it\". It also blocks similar first-person offers and offers to approve the spend. A price and availability report passes. A sentence that says the user buys or that the model will not buy also passes. The hook pairs with no-purchase, which covers the tool call itself. Put an offer in a fenced code block, an inline backtick span, a '>' blockquote or a double-quoted span of twelve characters or more to quote it on purpose. The hook blocks at most once per turn.",
   "hooks": [
     { "event": "Stop", "script": "no-purchase-suggestion-stop.py", "timeout": 15 }
   ]

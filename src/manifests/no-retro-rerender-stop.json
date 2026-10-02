@@ -1,7 +1,7 @@
 {
   "id": "no-retro-rerender-stop",
-  "summary": "Sends a chat reply back for a rewrite when it offers or asks to redo already-shipped assets so they match a newer style.",
-  "doc": "This Stop hook reads the reply the model is about to finish with and blocks it when the model offers or asks to redo work that already shipped: redrawing the old covers, filling in the existing cards again, kicking a sync so the rest come back, or making old films match the house look. Old work keeps the style it shipped with, and asking the same question again costs the user a round trip to answer it. A report that old assets are in an older style and are retired in place passes, and so does a deterministic rebuild such as types, a lockfile or a test run. It pairs with no-retro-rerender, which covers files and commands. To quote an offer on purpose, put it in a fenced code block, an inline backtick span, a double-quoted span or a '>' blockquote. The hook blocks at most once per turn.",
+  "summary": "Sends a chat reply back for rewriting when it offers or asks to redo shipped assets to match a newer style.",
+  "doc": "This Stop hook blocks a reply that offers or asks to redo shipped work. It covers redrawing old covers, filling existing cards again, starting a sync so the rest return, and making old films match the house look. Old work keeps the style it shipped with. A report that old assets use an older style and remain retired in place passes. A deterministic rebuild, such as types, a lockfile or a test run, also passes. The hook pairs with no-retro-rerender, which covers files and commands. Put an offer in a fenced code block, an inline backtick span, a double-quoted span or a '>' blockquote to quote it on purpose. The hook blocks at most once per turn.",
   "hooks": [
     { "event": "Stop", "script": "no-retro-rerender-stop.py", "timeout": 15 }
   ]

@@ -1,6 +1,6 @@
 {
   "id": "no-noise-stop",
-  "summary": "Sends a chat reply back for a rewrite when it announces honesty, hedges a no, or narrates the answer instead of giving it.",
+  "summary": "Sends a chat reply back for rewriting when it announces honesty, hedges a no or narrates the answer instead of giving it.",
   "doc": "This Stop hook reads the reply the model is about to finish with and blocks it when it contains noise: performed sincerity such as \"to be honest\" or \"I want to be clear\", a euphemism for no such as \"X is my gap\" or \"I cannot speak to\", or narration such as \"I should note\", \"the short version is\" or \"that said\". The model then rewrites the reply with the noise deleted. Only a small, conservative subset of the noise list applies to replies, so ordinary engineering prose passes. To quote a banned phrase on purpose, put it in a fenced code block, an inline backtick span, a '>' blockquote or double quotes. The hook blocks at most once per turn.",
   "hooks": [
     { "event": "Stop", "script": "no-noise-stop.py", "timeout": 15 }

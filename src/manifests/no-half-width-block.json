@@ -1,7 +1,7 @@
 {
   "id": "no-half-width-block",
-  "summary": "Blocks a CSS rule that puts a ch or em reading measure on an element that also paints a background.",
-  "doc": "This hook denies a write when one CSS rule block declares both a background fill and a width or max-width in ch or em units. A filled block draws its own edge, and the reading measure stops the text short of that edge, so the box looks half empty. Fix it by narrowing the block to the measure, or by keeping the block wide and dropping the measure. Moving the same cap onto an inner span is not a fix. The hook only sees the same-element case; a bare ch cap inside a filled ancestor elsewhere in the tree needs a rendered-page check.",
+  "summary": "Blocks CSS rules that combine a ch or em reading measure with a background.",
+  "doc": "This hook denies a write when one CSS rule block declares both a background fill and a width or max-width in ch or em units. The fill defines the block edge, while the reading measure leaves space before that edge. Narrow the block to the measure, or keep the block wide and remove the measure. Moving the same cap to an inner span does not fix the rule. The hook checks only the same-element case. A bare ch cap inside a separately filled ancestor requires a rendered-page check.",
   "hooks": [
     {
       "event": "PreToolUse",
