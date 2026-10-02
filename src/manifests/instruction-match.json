@@ -1,0 +1,14 @@
+{
+  "id": "instruction-match",
+  "summary": "Denies a file write or agent brief whose verb contradicts what the user asked for on the same object, such as editing a deck the user asked to create.",
+  "doc": "This PreToolUse hook reads the verb and the object from the user's last three prompts and from the action about to run: an Agent or Task brief, or a Write, Edit, MultiEdit or NotebookEdit. When both name the same object with conflicting verbs (create against edit, create against delete, edit against delete), it denies the call once and shows the two side by side. A file edit only counts when the user said that file already exists, because then it is the model to copy, not the thing to change. It carries no list of past failures, and with no shared object it stays silent. When the action really is what was asked, run npx guardhooks declare instruction-match \"<verb> <object>, and why that is what was asked>\", which lasts two hours. A declaration whose own verb still contradicts the user's on that object is ignored.",
+  "declare": true,
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Agent|Task|Write|Edit|MultiEdit|NotebookEdit",
+      "script": "instruction-match.py",
+      "timeout": 10
+    }
+  ]
+}

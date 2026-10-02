@@ -1,0 +1,12 @@
+{
+  "id": "no-em-dash-stop",
+  "summary": "Sends a chat reply back for a rewrite when it contains an em dash or an en dash.",
+  "doc": "This Stop hook reads the reply the model is about to finish with and blocks it when it contains an em dash, an en dash, a horizontal bar, a minus sign, an escaped spelling of one, or `' -- '` used as a dash. The model then rewrites the reply with a period, a comma, a colon or parentheses. It pairs with no-em-dash, which covers files and shell commands. To quote text that really contains a dash, put it in a fenced code block, an inline backtick span or a '>' blockquote. The hook blocks at most once per turn.",
+  "hooks": [
+    {
+      "event": "Stop",
+      "script": "no-em-dash-stop.py",
+      "timeout": 15
+    }
+  ]
+}

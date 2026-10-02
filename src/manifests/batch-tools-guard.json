@@ -1,0 +1,13 @@
+{
+  "id": "batch-tools-guard",
+  "summary": "After twelve tool calls in a row that each went alone in their own request, reminds the model to batch independent calls.",
+  "doc": "This PreToolUse hook counts consecutive tool calls that arrive alone. Every request re-sends the whole conversation, so a lone call costs the full context however small its result is, and two independent calls sent one after the other cost twice what they cost in one message. Calls in the same request reach the hook within milliseconds of each other, which resets the count. After twelve lone calls it adds a reminder to put independent calls in one message and chain related shell steps with &&. It never denies a call. Its counter lives in <config>/guardhooks/state/batch-tools-guard/.",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Bash|Read|Grep|Glob",
+      "script": "batch-tools-guard.py",
+      "timeout": 5
+    }
+  ]
+}

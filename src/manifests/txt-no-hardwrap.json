@@ -1,0 +1,13 @@
+{
+  "id": "txt-no-hardwrap",
+  "summary": "Blocks hard-wrapped paragraphs in .txt files, so the text pastes cleanly into email and forms.",
+  "doc": "This hook denies a write to a .txt file when a line of 45 characters or more is followed directly by another non-blank line, which is the shape of a hard-wrapped paragraph. A .txt deliverable is usually pasted into an email, a form field or a profile box, and hard breaks travel with the paste. Write each paragraph as one line and separate paragraphs with a blank line. Short label lines, sign-offs and lists of short items pass.",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Write|Edit|MultiEdit",
+      "script": "txt-no-hardwrap.py",
+      "timeout": 10
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "_about": "Pattern list for mobile-screenshot-guard. A phone photo of a site needs three things together: a capture, a phone viewport, and a navigation to a site that is not a local file render.",
+  "phone_viewport": [
+    { "label": "a browser viewport narrower than 600 CSS px", "re": "(?:setViewport(?:Size)?\\s*\\(\\s*|viewport\\s*:\\s*)\\{[^}]{0,80}?\\bwidth\\s*:\\s*[1-5]\\d\\d\\b" },
+    { "label": "isMobile: true", "re": "isMobile\\s*:\\s*true" },
+    { "label": "a phone user agent", "re": "\\((?:iPhone|iPod|Linux; Android)[;) ]" },
+    { "label": "a phone device descriptor", "re": "devices\\s*\\[\\s*['\"](?:iPhone|Pixel|Galaxy|Nexus|Moto)|KnownDevices\\s*\\[" },
+    { "label": "a phone device on a capture flag", "re": "--device[= ]['\"]?(?:iPhone|Pixel|Galaxy|Nexus|Moto)" },
+    { "label": "a phone-sized frame constant", "re": "\\b\\w*(?:PHONE|MOBILE|IPHONE|Phone|Mobile)\\w*\\s*=\\s*\\{[^}]{0,60}?\\b(?:w|width)\\s*:\\s*[1-5]\\d\\d\\b" },
+    { "label": "a phone width on a capture flag", "re": "--(?:vw|width|viewport)[= ](?:\\d+,)*[1-5]\\d\\d(?!\\d)" },
+    { "label": "a phone-sized --viewport-size", "re": "--viewport-size[= ]['\"]?[1-5]\\d\\d\\s*,\\s*\\d+" },
+    { "label": "a phone-shaped --frame", "re": "--frame[= ]['\"]?[1-5]\\d\\dx\\d+" },
+    { "label": "a phone-shaped --window-size", "re": "--window-size[= ][1-5]\\d\\d,\\d+" }
+  ],
+  "capture": [
+    "\\.screenshot\\s*\\(",
+    "captureScreenshot",
+    "startScreencast",
+    "screencastFrame",
+    "recordVideo",
+    "\\bplaywright\\s+screenshot\\b",
+    "--screenshot\\b",
+    "\\bshot-scraper\\b",
+    "\\bcapture-website\\b",
+    "\\bpageres\\b",
+    "\\bscreencapture\\b"
+  ],
+  "goto": "\\.goto\\(",
+  "local_render": "\\.goto\\(\\s*['\"`]file://",
+  "site_hint": "https?://(?!www\\.w3\\.org)|--url\\b",
+  "local_content": "\\.setContent\\(",
+  "qa_paths": "(?:^|/)(?:qa|e2e|tests?|__tests__|gates|responsive)/|\\.(?:test|spec)\\.[cm]?[jt]sx?$|mobile-audit|responsive-check",
+  "escape": "phone-viewport: third-party form"
+}

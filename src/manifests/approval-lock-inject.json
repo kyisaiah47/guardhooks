@@ -1,0 +1,12 @@
+{
+  "id": "approval-lock-inject",
+  "summary": "When a prompt asks to deploy, publish or use an approved artifact, reminds the model to ship those exact bytes unchanged.",
+  "doc": "This UserPromptSubmit hook adds a short rule to the context when the prompt contains a deploy word such as deploy, publish, upload, embed, ship or use the approved. An approved image, card or layout is the final input, not a reference for a new design pass. The rule says to find the exact approved source, use the same bytes, crop, dimensions, placement and CSS, avoid nearby visual changes, and ask one plain question first if the artifact cannot be delivered unchanged. It never blocks anything, and it stays silent on other prompts.",
+  "hooks": [
+    {
+      "event": "UserPromptSubmit",
+      "script": "approval-lock-inject.py",
+      "timeout": 5
+    }
+  ]
+}

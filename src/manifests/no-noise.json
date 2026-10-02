@@ -1,0 +1,8 @@
+{
+  "id": "no-noise",
+  "summary": "Blocks filler phrases in product copy and hedging phrases in prompts and answer templates, such as \"seamlessly\", \"designed to\", \"to be honest\" and \"not my strongest area\".",
+  "doc": "This hook denies a Write, Edit, MultiEdit, NotebookEdit or Bash call that puts noise into copy or into text written on your behalf. In copy paths (landing pages, marketing, social, email, content, any .md file) it blocks filler such as \"designed to\", \"seamlessly\", \"powerful\", \"streamline\", \"the ultimate\", a question used as a hook, and copy that calls the product a toy or useless. In prompt and answer paths (prompts, templates, answers, replies, cover letters) it blocks performed sincerity such as \"to be honest\", euphemisms for no such as \"not my strongest area\", and narration such as \"I should note\". Readers skip filler, and a hedge reads as a no anyway, so the plain sentence does better. Only new text is scanned and code comments are ignored. To quote a banned phrase on purpose, put it in a fenced code block, an inline backtick span, a '>' blockquote or double quotes.",
+  "hooks": [
+    { "event": "PreToolUse", "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash", "script": "no-noise.py", "timeout": 10 }
+  ]
+}

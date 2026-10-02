@@ -1,0 +1,13 @@
+{
+  "id": "no-left-accent",
+  "summary": "Blocks one-sided accent borders: a 2px or wider coloured stripe on one edge of a card or row.",
+  "doc": "This hook denies a write that adds a border on one side only, 2px or wider, in a visible colour, in CSS or as a Tailwind border-l, border-r, border-s or border-e class. That stripe is the most templated move in dashboard UI. Give the object a tint or a fill and a hairline on all four sides instead. A 1px border on one side (a divider), a border on all four sides, and a transparent one-sided border that reserves space all pass. Comments are ignored, so a comment that explains the rule never trips it.",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+      "script": "no-left-accent.py",
+      "timeout": 10
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "no-prose-stop",
+  "summary": "Sends a chat reply back for a rewrite when it puts a caption in front of a link or a label where a sentence belongs.",
+  "doc": "This Stop hook reads the reply the model is about to finish with and blocks it when a link is introduced by a caption instead of a sentence (\"A four-minute tour of the product: <link>\" instead of \"Here is a demo video: <link>\"), or when a noun phrase ending in a colon sits alone on a line above prose instead of above a list. The model then rewrites the reply as plain sentences. Only these two shapes apply to replies, so ordinary engineering replies pass. To quote a shape on purpose, put it in a fenced code block, an inline backtick span, a '>' blockquote or double quotes. The hook blocks at most once per turn.",
+  "hooks": [
+    { "event": "Stop", "script": "no-prose-stop.py", "timeout": 15 }
+  ]
+}

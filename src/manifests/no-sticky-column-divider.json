@@ -1,0 +1,13 @@
+{
+  "id": "no-sticky-column-divider",
+  "summary": "Blocks a left or right border drawn on a sticky column, where it stops short of the page.",
+  "doc": "This hook denies a write where one CSS rule has position: sticky, a top offset and a left or right border, or where a Tailwind className has sticky, a top-* utility and border-l or border-r. A sticky rail is only as tall as its own content, so a divider drawn on it stops where its content ends while the middle column runs on. Paint the line on the grid container at full height, or keep the border on a stretching column and make an inner wrapper sticky. Sticky table cells (th or td) are exempt, because they are as tall as their row.",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+      "script": "no-sticky-column-divider.py",
+      "timeout": 10
+    }
+  ]
+}

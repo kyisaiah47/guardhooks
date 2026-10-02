@@ -1,0 +1,13 @@
+{
+  "id": "mobile-screenshot-guard",
+  "summary": "Blocks phone-width screenshots of a site; captures of a product or site are desktop width.",
+  "doc": "This hook denies a Bash command or a file write that takes a phone-width photo of a site. It fires when three things appear together: a capture (a .screenshot() call, a screencast, `playwright screenshot`, `--screenshot`), a phone viewport (narrower than 600 CSS px, isMobile, a phone user agent or device, or a phone width on a capture flag), and a navigation to a real site. Phone photos of a desktop product make it look smaller and worse than it is, so captures should be 1280 CSS px wide or wider. Layout QA is allowed: files under qa, e2e, tests or gates folders and .test or .spec files may render at phone width, and so may a local file:// render. Automation that must emulate a phone to operate a third-party form can mark the line with the comment `phone-viewport: third-party form`.",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Bash|Write|Edit|MultiEdit",
+      "script": "mobile-screenshot-guard.py",
+      "timeout": 10
+    }
+  ]
+}

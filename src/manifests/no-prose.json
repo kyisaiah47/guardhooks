@@ -1,0 +1,8 @@
+{
+  "id": "no-prose",
+  "summary": "Blocks prose shapes in product copy and answer templates, such as a caption in front of a link, a price with no payer, or \"under the hood\".",
+  "doc": "This hook denies a Write, Edit, MultiEdit, NotebookEdit or Bash call that puts prose where information belongs, in the same copy and answer paths that no-noise covers. It blocks five shapes: a caption in front of a link (\"A four-minute tour of the product: <link>\"), a percent or dollar figure with no clause saying who pays (\"25 percent of relief granted\"), a metaphor for the product (\"under the hood\", \"secret sauce\", \"the magic\"), a label alone on a line followed by prose, and a tagline with a clause hung off the plain noun. A reader needs one fact per sentence with a subject and a verb, and these shapes drop exactly that. Only new text is scanned and code comments are ignored. To quote a shape on purpose, put it in a fenced code block, an inline backtick span, a '>' blockquote or double quotes.",
+  "hooks": [
+    { "event": "PreToolUse", "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash", "script": "no-prose.py", "timeout": 10 }
+  ]
+}

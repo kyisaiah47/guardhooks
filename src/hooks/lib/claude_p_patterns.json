@@ -1,0 +1,45 @@
+{
+  "$comment": "The one list behind no-claude-p.py (PreToolUse) and no-claude-p-stop.py (Stop). It matches a headless Claude CLI call: the print flag, the model flag, a spawn of the claude binary and the argv form. The hooks tell the model to use the headless CLI the user chose, named in the GUARDHOOKS_HEADLESS_CLI environment variable. Patterns use syntax that Python re and JavaScript RegExp both accept, matched case-insensitive.",
+  "self_paths": [
+    "no-claude-p",
+    "claude_p",
+    "CLAUDE.md",
+    "AGENTS.md"
+  ],
+  "invocation": [
+    {
+      "slug": "claude-print-flag",
+      "re": "(?<![\\w@./-])claude(?:\\.(?:sh|cjs|mjs))?\\s+(?:-p|--print|--prompt)(?![\\w-])",
+      "fix": "run the prompt through the headless CLI this project chose instead of the Claude CLI in print mode"
+    },
+    {
+      "slug": "claude-model-flag",
+      "re": "(?<![\\w@./-])claude\\s+--model(?![\\w-])",
+      "fix": "pass the model choice to the headless CLI this project chose"
+    },
+    {
+      "slug": "claude-spawn",
+      "re": "\\b(?:execFile|execFileSync|spawn|spawnSync|exec|execSync|fork)\\(\\s*['\"`](?:[^'\"`\\n]*/)?claude['\"`]",
+      "fix": "spawn the headless CLI this project chose, never the claude binary"
+    },
+    {
+      "slug": "claude-argv",
+      "re": "['\"`](?:[^'\"`\\n]*/)?claude['\"`]\\s*,\\s*\\[\\s*['\"`](?:-p|--print|--prompt|--model)['\"`]",
+      "fix": "build the argv for the headless CLI this project chose"
+    }
+  ],
+  "reply": {
+    "mention": "(?<![\\w@./-])(?:claude\\s+(?:-p|--print|--prompt)(?![\\w-])|claude-p(?![\\w-])|headless\\s+claude(?:\\s+code)?|claude(?:\\s+code)?\\s+headless|claude\\s+-p\\s+(?:fixer|judge|writer|run|call|pass|session))",
+    "negation": "\\b(?:not|never|no\\s+longer|retired|banned?|bans?|refus\\w*|den(?:y|ies|ied)|instead|replac\\w*|legacy|compat\\w*|shim|guards?|hooks?|stale|old|used\\s+to|former\\w*|superseded|purge\\w*|migrat\\w*|exit\\w*|error\\w*|failed|failure)\\b"
+  },
+  "fixtures": {
+    "deny": {
+      "claude-print-flag": "claude -p \"summarise this\"",
+      "claude-model-flag": "claude --model opus",
+      "claude-spawn": "execFileSync('/usr/local/bin/claude', args)",
+      "claude-argv": "execFileSync('claude', ['-p', prompt])"
+    },
+    "reply_fire": "I will write a claude -p fixer for this.",
+    "reply_pass": "The job no longer uses claude -p; it runs the chosen CLI."
+  }
+}

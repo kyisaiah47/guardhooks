@@ -1,0 +1,13 @@
+{
+  "id": "no-text-highlight",
+  "summary": "Blocks text-selection gestures (drag-select, double click, selectText) in screen-recording scripts.",
+  "doc": "This hook denies a write to a screen-recording script that paints a text highlight: a mouse-down to mouse-up drag, a double or triple click, selectText(), execCommand('selectAll'), a Range added to the live Selection, or a `select` beat. A blue selection band across a product's own words is the first thing a viewer sees in a demo. Only recorder files are checked: a path under video, capture, record, shoot or screencast folders, a Playwright spec, or code that starts a screencast. A drag that is not over text, such as moving a slider or a resize handle, passes when its mouse-down line carries the comment `// drag: not-text`.",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+      "script": "no-text-highlight.py",
+      "timeout": 10
+    }
+  ]
+}

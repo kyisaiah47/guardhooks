@@ -1,0 +1,13 @@
+{
+  "id": "no-heading-break",
+  "summary": "Blocks hard <br> line breaks inside a headline, title or <h1>.",
+  "doc": "This hook denies a write that hard-breaks a headline: an array of lines joined with <br> into a headline, title or heading, a headline string that contains <br>, or an <h1> that contains <br>. Hand-placed breaks land wherever the author guessed the box would run out of room, which is often mid-phrase once the font or width changes. Pass the headline as one string and let CSS wrap it, for example with `text-wrap: balance`. A <br> join in body copy, a table cell, a footer or an address block is not a headline and passes, and so does anything under node_modules or vendor.",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+      "script": "no-heading-break.py",
+      "timeout": 10
+    }
+  ]
+}

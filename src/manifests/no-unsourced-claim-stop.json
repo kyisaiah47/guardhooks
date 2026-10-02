@@ -1,0 +1,13 @@
+{
+  "id": "no-unsourced-claim-stop",
+  "summary": "Sends a reply back when it quotes something the session never saw or names a home-directory path that does not exist.",
+  "doc": "This Stop hook checks two things in the reply the model is about to finish with. A quote presented as what someone said or what a file contains, and any quoted span that carries a digit (a time, a size, a price), must appear in the session's transcript. A path under ~ or a home directory must exist on disk or appear in a tool result. The reply itself is never counted as evidence. A detail that makes an argument land does not feel like a guess to the model, so it is the detail most worth checking, and a correction is checked like any other reply. Ordinary quoted phrases with no attribution verb, short quotes with no digit, templated paths such as <slug>, quotes inside backtick code, and quotes attributed to a pasted screenshot all pass. When a flagged item has a real source outside the transcript, run npx guardhooks declare no-unsourced-claim-stop \"<the quote or path, and where you read it>\", which lasts two hours. The hook blocks at most once per turn and three times per session.",
+  "declare": true,
+  "hooks": [
+    {
+      "event": "Stop",
+      "script": "no-unsourced-claim-stop.py",
+      "timeout": 15
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "id": "tone-guard-stop",
+  "summary": "Sends a reply back for a rewrite when it comments on the user's tone instead of answering.",
+  "doc": "This Stop hook blocks a reply that polices how the user is talking: asking them to drop swearing or name-calling, \"let's keep it civil\", \"I'll keep helping regardless\", calling a message abusive, or warning about ending the conversation. A frustrated user wants the problem solved, and a remark about their tone adds friction without adding an answer. The model rewrites the reply with the sentence removed and no comment about the removal. The hook stays quiet when the user's own last message uses the same kind of phrase, because then the conversation is about the rule, and it ignores phrases quoted in backticks or a '>' blockquote. It blocks at most once per turn.",
+  "hooks": [
+    { "event": "Stop", "script": "tone-guard-stop.py", "timeout": 10 }
+  ]
+}

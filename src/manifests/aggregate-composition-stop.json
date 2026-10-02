@@ -1,0 +1,9 @@
+{
+  "id": "aggregate-composition-stop",
+  "summary": "Sends a reply back when it reports a traffic, reach or engagement number without sample size, time window and spread.",
+  "doc": "This Stop hook blocks a reply that states a headline audience number (visitors, views, followers, clicks, sessions, an average or a multiple) in a traffic or platform context without saying how many samples it covers, over what time window, and how it is spread (a median, a per-person ratio or a breakdown). A ranking across two or more platforms must also say which platforms report the metric. A total can be correct while its meaning is false: one outlier can carry a mean, one week can carry a sixty-day total, and one view per visitor with no returns often means a crawler. Numbers inside fenced code blocks are ignored. When a number really needs no breakdown, npx guardhooks declare aggregate-composition-stop \"<reason>\" turns the hook off for two hours.",
+  "declare": true,
+  "hooks": [
+    { "event": "Stop", "script": "aggregate-composition-stop.py", "timeout": 15 }
+  ]
+}

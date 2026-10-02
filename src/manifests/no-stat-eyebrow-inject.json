@@ -1,0 +1,12 @@
+{
+  "id": "no-stat-eyebrow-inject",
+  "summary": "Adds the stat-eyebrow rule to any prompt that asks for design work, before a layout is chosen.",
+  "doc": "This UserPromptSubmit hook adds the stat-eyebrow rule to the model's context when the prompt mentions design work, such as a layout, cover, card, slide, deck, thumbnail, dashboard or chart. The rule says never to generate, propose or list a card where a giant number is the dominant type and a small all-caps tracked label sits beside it, and to lead with a sentence instead. It pairs with no-stat-eyebrow, which blocks the card when it is written. It never blocks anything, and it stays silent on prompts with no design words.",
+  "hooks": [
+    {
+      "event": "UserPromptSubmit",
+      "script": "no-stat-eyebrow-inject.py",
+      "timeout": 5
+    }
+  ]
+}

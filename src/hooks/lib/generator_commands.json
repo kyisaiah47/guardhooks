@@ -1,0 +1,18 @@
+{
+  "comment": [
+    "Shell commands that make a new artifact from a prompt. A transform takes a named file and returns the same subject changed: background removal, a crop, a resize, ffmpeg on an input. A generator takes a prompt and returns a subject that never existed, and running it again does not reproduce its earlier output. Only generators belong here.",
+    "Python regexes, matched case-insensitive. Read by no-silent-substitution and substitution-disclosure-stop.",
+    "Add your own generator entry points, one regex per line, in <config>/guardhooks/generator-commands.txt."
+  ],
+  "patterns": [
+    "\\bnode\\s+\\S*(?:generate|generator|gen-|regen|imagen|txt2img|text2image|diffus)\\S*\\.(?:mjs|js|cjs|ts)\\b",
+    "\\bpython3?\\s+\\S*(?:generate|regen|imagen|txt2img|sdxl|diffus)\\S*\\.py\\b",
+    "--(?:regenerate|regen|force-new|new-artwork)\\b",
+    "\\bprompts?\\.txt\\b",
+    "\\b(?:openai|replicate|fal|stability|runway|luma|pika|midjourney)\\b.*\\b(?:image|video|generat)",
+    "api\\.openai\\.com/v1/images",
+    "generativelanguage\\.googleapis\\.com/.*(?:generateContent|predict)",
+    "api\\.replicate\\.com/v1/(?:predictions|models)",
+    "api\\.stability\\.ai/v\\d"
+  ]
+}

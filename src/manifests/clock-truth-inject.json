@@ -1,0 +1,12 @@
+{
+  "id": "clock-truth-inject",
+  "summary": "Adds the real wall-clock time to every prompt, with a note that it goes stale and must be read again.",
+  "doc": "This UserPromptSubmit hook adds the current local date and time, read at the moment of the prompt, to the context the model sees. The model has no clock, and between readings it tends to estimate the time from how much work it has done, which can be wrong by a wide margin. The note tells the model that the reading is stale from then on, that tool calls are not a clock, and that it must run date again before it states the current time, the time left before a deadline, or the time elapsed. It never blocks anything. It pairs with no-invented-clock-stop, which checks the reply.",
+  "hooks": [
+    {
+      "event": "UserPromptSubmit",
+      "script": "clock-truth-inject.py",
+      "timeout": 5
+    }
+  ]
+}

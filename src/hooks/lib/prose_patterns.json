@@ -1,0 +1,237 @@
+{
+ "$comment": "One regex list for the information-not-prose rule, read by prose.py. Patterns use syntax shared by JavaScript RegExp and Python re, and compile case-insensitive and multi-line. URLs are replaced by the token <url> before every scan, so a caption in front of a link can be seen. Scope flags: reply = the Stop hook applies it to chat replies; answer = text written on the user's behalf, such as email, form answers and replies; copy = product copy, such as landing pages, posts, captions and listings. A pattern may carry `requires` (a case-sensitive regex the sentence around the hit must also match), `unless` (a case-sensitive regex; when it matches that sentence the hit is dropped) and `min_words` (the sentence must carry at least this many words). The reply subset is kept to two patterns on purpose, because a guard that fires on ordinary replies gets switched off. Family 5 is scoped to answer and copy only for the same reason.",
+ "rule": "INFORMATION, NOT PROSE. Before a sentence, ask who reads it and what they need from it. Write that. One fact per sentence: subject, verb, object, for example \"You pay 25 percent of what the state grants.\" Use the reader's words and the product's own words. Never use a metaphor for the product, a coined noun, a label or caption in place of a sentence (\"A four-minute tour of the product:\"), or a noun phrase standing for a clause (\"25 percent of relief granted\"). A link is introduced by a sentence: \"Here is a demo video: <link>\". A money figure sits in a clause that says who pays whom: \"You pay 25 percent of what the state grants, and nothing if we find nothing.\" A length limit is met by dropping a fact, never by deleting the subject or verb from a fact. No rhythm, no parallel triplets, no scene-setting, no \"the X that Y\" constructions, and no analogy unless a standard asks for one.",
+ "copy_rule": "INFORMATION, NOT PROSE. Product copy states what the product does, what the reader gets and what the reader pays, in plain sentences with a subject and a verb. Use the product's own words, never a metaphor for the product (\"under the hood\", \"secret sauce\", \"the magic\"). A link follows a sentence (\"Here is a demo video:\"), never a caption (\"A four-minute tour of the product:\"). A percent or dollar figure sits in a clause with a payer and a verb (\"You pay 25 percent of what the state grants\"), never a bare noun phrase (\"25 percent of relief granted\"). A comma-chained list of noun phrases is not a sentence. A name or tagline is the plain noun (\"four ranking sites\"), not a noun with a clause hung off it. A length limit is met by dropping a fact, never by deleting a subject or a verb.",
+ "families": {
+  "1": {
+   "name": "caption-for-a-link",
+   "title": "CAPTION FOR A LINK",
+   "what": "a noun phrase ending in a colon in front of a link, in place of a sentence that says what the link is"
+  },
+  "2": {
+   "name": "figure-without-payer",
+   "title": "FIGURE WITHOUT A PAYER",
+   "what": "a percent or dollar figure about money with no clause saying who pays or gets it"
+  },
+  "3": {
+   "name": "product-metaphor",
+   "title": "METAPHOR FOR THE PRODUCT",
+   "what": "a metaphor or coined name standing in for the product or one of its parts in outward copy"
+  },
+  "4": {
+   "name": "label-not-sentence",
+   "title": "LABEL IN PLACE OF A SENTENCE",
+   "what": "a noun phrase ending in a colon alone on a line, followed by prose or a link instead of a list"
+  },
+  "5": {
+   "name": "modifier-tail",
+   "title": "MODIFIER TAIL ON A NAME",
+   "what": "a naming fragment (a tagline, theme, headline or card line) with a relative clause or a participial phrase hung off the noun instead of just saying the plain noun"
+  }
+ },
+ "patterns": [
+  {
+   "slug": "caption-link",
+   "family": 1,
+   "pattern": "(?:^|[.!?]\\s+|\\n)[ \\t]*(?:a|an|the|our|your|my|this)\\s+(?![^\\n:]*\\b(?:is|are|was|were|here|at|see|watch|open|go|goes)\\b)[^.!?\\n:<]{2,80}:[ \\t]*(?:\\n[ \\t]*)?<url>|(?:^|[.!?]\\s+|\\n)[ \\t]*(?!here\\b)[a-z][^.!?\\n:<]{1,60}\\s+of\\s+(?:the|our|your|a|an)\\s+[^.!?\\n:<]{1,40}:[ \\t]*(?:\\n[ \\t]*)?<url>",
+   "fix": "write a sentence that says what the link is: Here is a demo video: <link>",
+   "reply": true,
+   "answer": true,
+   "copy": true
+  },
+  {
+   "slug": "figure-no-payer",
+   "family": 2,
+   "pattern": "\\$\\s?\\d[\\d,]*(?:\\.\\d+)?\\b|\\b\\d[\\d,]*\\s+(?:dollars|usd)\\b|\\b\\d[\\d,]*(?:\\.\\d+)?\\s*(?:%|percent|per\\s*cent)",
+   "requires": "\\b(?:[Rr]elief|[Rr]efunds?|[Ff]ees?|[Ss]avings?|[Rr]evenue|[Cc]ommission|[Cc]ut|[Ss]hare|[Pp]rices?|[Rr]ecover(?:y|ies|ed)?|[Gg]rants?|[Gg]ranted|[Rr]ebates?|[Cc]ontingency|[Cc]harges?|[Pp]ayments?|[Pp]ayouts?|[Pp]aid|[Ii]nvoices?|[Bb]ills?|[Cc]osts?|[Dd]ollars|[Cc]redits?|\\$)",
+   "unless": "\\b(?:[Yy]ou|[Ww]e|[Tt]hey|I|[Ii]t|[Hh]e|[Ss]he|[Ww]ho|[Tt]hat|[Ww]hich|[Cc]lients?|[Cc]ustomers?|[Bb]uyers?|[Oo]wners?|[Ee]mployers?|[Cc]ompanies|[Tt]he\\s+\\w+(?<!ed)|[Oo]ur\\s+\\w+(?<!ed)|[Yy]our\\s+\\w+(?<!ed)|[A-Z][a-z]+(?<!ed))\\s+(?:(?:will|would|can|could|only|never|then|also|just|still|usually|typically)\\s+)?(?:pay|pays|paid|charge|charged|bill|bills|billed|cost|costs|invoice|invoices|invoiced|refund|refunds|refunded|grant|grants|granted|owe|owes|owed|keep|keeps|kept|get|gets|got|receive|receives|received|earn|earns|earned|save|saves|saved|recover|recovers|recovered|take|takes|took|collect|collects|collected|return|returns|returned)\\b|\\b(?:[Ff]ee|[Pp]rice|[Pp]ricing|[Rr]ate)\\s+(?:is|was|of|for)\\b|\\b(?:is|are|was|were|averages?|averaged|totals?|totaled|comes?\\s+to|came\\s+to|equals?)\\s+(?:about|around|roughly|over|under|at\\s+least|up\\s+to|\\$|\\d)|\\bcosts?\\s+(?:you|\\$|\\d)|\\bno\\s+charge\\b|\\bper\\s+(?:month|year|seat|user|line|statement|file)\\b|/mo\\b|/yr\\b",
+   "min_words": 6,
+   "fix": "put the figure in a clause with a payer and a verb: You pay 25 percent of what the state grants.",
+   "reply": false,
+   "answer": true,
+   "copy": true
+  },
+  {
+   "slug": "product-metaphor",
+   "family": 3,
+   "pattern": "\\bunder\\s+the\\s+hood\\b|\\bbehind\\s+the\\s+scenes\\b|\\bthe\\s+magic\\b(?!\\s+links?\\b)|\\b(?:our|the|its|a)\\s+secret\\s+sauce\\b|\\b(?:a|your|new)\\s+superpowers?\\b|\\bswiss\\s+army\\s+knife\\b|\\bthe\\s+(?:brains|engine|heart)\\s+(?:behind|of)\\s+(?:the|your|our|this|every)\\b",
+   "fix": "use the product's own words: name the part and say what it does",
+   "reply": false,
+   "answer": true,
+   "copy": true
+  },
+  {
+   "slug": "label-not-sentence",
+   "family": 4,
+   "pattern": "(?:^|\\n)[ \\t]*(?:a|an|the|our|your|my)\\s+(?![^\\n:]*\\b(?:is|are|was|were|has|have|had|does|did|will|can|here)\\b)[^\\n:.!?<`]{2,70}:[ \\t]*\\n(?:[ \\t]*\\n)*[ \\t]*(?![-*•|#>]|\\d+[.)]\\s|```)\\S",
+   "fix": "write the sentence the label stands for: Here is a demo video: <link>, or The state deadline is thirty days.",
+   "reply": true,
+   "answer": true,
+   "copy": true
+  },
+  {
+   "slug": "naming-participial-tail",
+   "family": 5,
+   "pattern": "(?:^|\\n)[ \\t]*(?:the|our|a|an|two|three|four|five|six|seven|eight|nine|ten|\\d+)\\s+[a-z][^\\n.!?:;]{0,50},\\s+(?:[a-z]+(?:ed|ing)|rebuilt|built|written|rewritten|drawn|redrawn|kept|made|remade|shown|taken|retaken|given|held|sent|resent|run|rerun|cut|recut|put|read|reread|set|reset|found|refound|left|lost|won|met|told|sold|resold|paid|repaid|spent|dealt|felt|drawn|torn|worn|sworn|blown|grown|known|thrown|flown|driven|proven|chosen|frozen|broken|spoken|woken|stolen|risen|fallen|eaten|beaten|hidden|ridden|bitten|bound|wound|ground|swept|slept|crept|dwelt|burnt|learnt|spelt|spilt|split|shut|hit|let|bet|quit|spread|shed|fed|refed|bled|led|misled|sped|fled|struck|stuck|dug|hung|swung|clung|flung|stung|spun|shot|caught|taught|brought|bought|fought|sought|thought)\\s+[^\\n.!?:;]{2,40}[ \\t]*(?=\\n|$)",
+   "fix": "say the plain noun and stop: \"four ranking sites\", not \"four boards, recounted every night\"",
+   "reply": false,
+   "answer": true,
+   "copy": true
+  },
+  {
+   "slug": "naming-relative-clause",
+   "family": 5,
+   "pattern": "(?:^|\\n)[ \\t]*(?:the|two|three|four|five|six|seven|eight|nine|ten|\\d+)\\s+[a-z][a-z-]{2,24}s\\s+(?:that|which|who|whom|whose|where|nobody|anybody|anyone|everyone|no one)\\s+[^\\n.!?:;]{4,60}[ \\t]*(?=\\n|$)",
+   "fix": "say the plain noun and stop: \"four ranking sites\", not \"four rankings nobody can buy their way onto\"",
+   "reply": false,
+   "answer": true,
+   "copy": true
+  }
+ ],
+ "positives": {
+  "1": [
+   "A four-minute tour of the product: https://example.com/share/demo",
+   "The full report of the sweep: https://example.com/reports/sweep",
+   "Our pricing page for the smaller plan: https://example.com/pricing",
+   "A short tour of the product: https://example.com/tour",
+   "The live page with the new tile: https://example.com",
+   "Your statement, scored and drafted: https://example.com/sample",
+   "An example of a drafted protest: https://example.com/example",
+   "A two-minute recording of the checkout flow:\nhttps://example.com/share/abc",
+   "The deck we showed the investors: https://example.com/deck",
+   "A sample of the output for a ten-line statement: https://example.com/sample",
+   "Overview of the tool: https://example.com",
+   "Recording of the first run: https://example.com/share/def"
+  ],
+  "2": [
+   "Lines come back in 48 hours, 25 percent of relief granted, nothing if nothing is found.",
+   "Scored lines and drafted protests inside 48 hours, 25 percent of relief.",
+   "The first statement is free, then 25 percent of the refund on every later one.",
+   "Most clients see $4,000 in relief in the first quarter.",
+   "A typical statement carries 30 percent of charges that should not be there.",
+   "Relief of $2,300 on the March statement, drafted in the state's own form.",
+   "20 percent of the savings, invoiced after the state confirms.",
+   "Around 15 percent of the relief comes from one line on the statement.",
+   "Half of the recovered charges, $1,150 on the sample statement, stay with the employer.",
+   "Every protest that wins puts 75 percent of the credit on the next statement.",
+   "The March statement alone held $3,200 of charges from a quit.",
+   "Scored charge lines, drafted protests, 25 percent of relief, all inside 48 hours."
+  ],
+  "3": [
+   "Under the hood, the scorer reads each charge line.",
+   "Behind the scenes, the model matches every record.",
+   "The magic is in the matching step.",
+   "Our secret sauce is the drafting step.",
+   "Give every analyst a new superpower.",
+   "It is a Swiss Army knife for invoices.",
+   "The brains behind the product is a ranking model.",
+   "The engine behind every report is a single query.",
+   "The heart of the app is the sync step.",
+   "Under the hood it is one SQLite file.",
+   "This is where the magic happens.",
+   "Our secret sauce: a second pass over every match."
+  ],
+  "4": [
+   "A four-minute tour of the product:\nhttps://example.com/share/abc",
+   "The mechanism:\nInformation is drafted as prose and trimmed to a length.",
+   "Our pricing for a small employer:\n25 percent of the relief, nothing if nothing is found.",
+   "The result on the sample statement:\nEleven lines scored, three protests drafted.",
+   "A note on timing:\nThe state deadline is thirty days from the statement date.",
+   "The two sentences that went out:\nLines come back in 48 hours.",
+   "Your next step:\nUpload four to twelve statements.",
+   "The short version of the offer:\n\nWe read the statement and draft the protest.",
+   "An example from the March statement:\nLine 4 charges a separation that was a quit.",
+   "The demo:\nhttps://example.com/share/abc",
+   "My read on the second job:\nIt never ran."
+  ],
+  "5": [
+   "four boards, recounted every night",
+   "four rankings nobody can buy their way onto",
+   "four scoreboards that nobody submitted them to",
+   "the tools that chase what you are owed",
+   "three directories, scored every morning",
+   "four pages that show how long ago it happened",
+   "the ones that read a statement you already have",
+   "five trackers, updated the moment something moves",
+   "four registries that nobody can pay to enter",
+   "the boards that watch a tool go quiet",
+   "six lists, rebuilt from scratch each week",
+   "four checkers that read a document you already have"
+  ]
+ },
+ "negatives": {
+  "1": [
+   "Here is a demo video: https://example.com/share/demo",
+   "Demo video: https://example.com/share/abc",
+   "The sample is at https://example.com/sample.",
+   "Video: https://example.com/share/abc",
+   "The report is here: https://example.com/reports/sweep",
+   "Link: https://example.com",
+   "You can watch the demo at https://example.com/share/abc.",
+   "The page is live at https://example.com and shows the new tile.",
+   "Artifact: https://example.com/code/artifacts/abc",
+   "The demo video is here: https://example.com/share/abc",
+   "Open https://example.com/request and upload the statements.",
+   "Here is the report: https://example.com/reports/sweep"
+  ],
+  "2": [
+   "You pay 25 percent of what the state grants, and nothing if we find nothing.",
+   "You get the scored lines and drafted protests back inside 48 hours.",
+   "The state granted $2,300 of relief on the March statement.",
+   "We charge 25 percent of the relief the state grants.",
+   "The fee is 25 percent of the relief, billed after the state confirms.",
+   "Your first statement is free.",
+   "The average relief on a first statement is $2,400.",
+   "The plan costs $49 per month and covers five statements.",
+   "92 percent of tool-calling requests carried one tool.",
+   "The gate fired on 20 of 1,000 messages, 2.0 percent.",
+   "You keep 75 percent of every dollar the state returns.",
+   "Employers recover about 30 percent of disputed charges."
+  ],
+  "3": [
+   "Here is a demo video: https://example.com/share/abc",
+   "The tool reads each quarterly benefit-charge statement line by line.",
+   "The scorer reads each charge line and matches it to a separation.",
+   "You upload the statements and get the drafted protests back.",
+   "The model matches every charge to a separation.",
+   "A vendor's claims desk does this for large employers.",
+   "The help desk answers within a day.",
+   "The first touch goes out on Monday.",
+   "The drafter writes the protest in the state's own form.",
+   "The demo video runs four minutes.",
+   "You pay 25 percent of what the state grants.",
+   "Click the magic link in your email to sign in.",
+   "The hood of the truck is open in the third photo.",
+   "The engine runs one query per report."
+  ],
+  "4": [
+   "Here is a demo video:\nhttps://example.com/share/abc",
+   "Files written:\n- prose.py\n- prose_patterns.json",
+   "The three defects:\n1. the column walk\n2. the sweep\n3. the height",
+   "The result: eleven lines scored, three protests drafted.",
+   "Demo video:\nhttps://example.com/share/abc",
+   "The hook is registered in five settings files:\n\n| file | line |\n| a | 1 |",
+   "The state deadline is thirty days from the statement date.",
+   "The command to run:\n```\npython3 prose.py --selftest\n```",
+   "The job posted twice:\n> first post\n> second post",
+   "The fix is in. The selftest passes.",
+   "The reply subset:\n- caption-link\n- label-not-sentence"
+  ],
+  "5": [
+   "four ranking sites",
+   "four scored directories",
+   "the purple ones",
+   "four invoice tools",
+   "You pay 25 percent of what the state grants.",
+   "The board that ships is the one we measured.",
+   "Here is a demo video: https://example.com/share/abc",
+   "four tools for agency owners",
+   "The rankings update every night.",
+   "We rebuilt the four boards that were stale.",
+   "four starter kit directories",
+   "The four sites that were stale are fixed now.",
+   "three agent tool boards",
+   "I scored the four boards, then pushed the fix."
+  ]
+ }
+}

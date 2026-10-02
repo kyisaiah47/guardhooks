@@ -1,0 +1,28 @@
+{
+  "_why": "One definition of what spends a paid model API key, read by no-unpaid-inference.py through paid_inference.py. Every pattern uses the regex subset that Python re and JavaScript RegExp both accept, so another tool can compile the same strings.",
+
+  "host": "(?:api\\.anthropic\\.com|api\\.openai\\.com)",
+
+  "spend_path": "(?:api\\.anthropic\\.com|api\\.openai\\.com)/v1/(?:messages|complete|completions|chat|responses|embeddings|moderations|audio|images|files|batches|fine_tuning|assistants|threads|vector_stores|realtime|uploads|containers|evals)\\b",
+
+  "models_path": "(?:api\\.anthropic\\.com|api\\.openai\\.com)/v1/models\\b",
+
+  "has_body": "(?:^|\\s)(?:-d|--data|--data-raw|--data-binary|--data-urlencode|--json)\\b|(?:^|\\s)-X\\s*(?:POST|PUT|PATCH)\\b|(?:^|\\s)--request\\s*(?:POST|PUT|PATCH)\\b",
+
+  "sdk_spend": "\\b(?:messages\\s*\\.\\s*(?:create|stream|batches)|messages\\s*\\.\\s*with_raw_response|completions\\s*\\.\\s*(?:create|parse|stream)|chat\\s*\\.\\s*completions\\s*\\.\\s*(?:create|parse|stream)|responses\\s*\\.\\s*(?:create|parse|stream)|embeddings\\s*\\.\\s*create|moderations\\s*\\.\\s*create|images\\s*\\.\\s*(?:generate|edit|create_variation)|audio\\s*\\.\\s*(?:transcriptions|translations|speech)\\s*\\.\\s*create|batches\\s*\\.\\s*create|fine_tuning\\s*\\.\\s*jobs\\s*\\.\\s*create|beta\\s*\\.\\s*(?:messages|threads|assistants)\\s*\\.\\s*create)\\s*\\(",
+
+  "sdk_ctor": "\\b(?:new\\s+Anthropic\\s*\\(|new\\s+OpenAI\\s*\\(|Anthropic\\s*\\(\\s*(?:api_key|\\)|$)|OpenAI\\s*\\(\\s*(?:api_key|\\)|$)|AsyncAnthropic\\s*\\(|AsyncOpenAI\\s*\\(|anthropic\\s*\\.\\s*Anthropic\\s*\\(|openai\\s*\\.\\s*OpenAI\\s*\\()",
+
+  "curl_like": "\\b(?:curl|wget|xh|httpie|aria2c|lwp-request|vegeta|fetch\\s+-)\\b|(?<![\\w./:-])https?\\s+(?:-{1,2}\\w|GET|POST|PUT|PATCH|DELETE)\\b",
+
+  "inline_run": "\\b(?:node|nodejs|bun|deno|tsx|ts-node)\\s+(?:--\\S+\\s+)*-e\\b|\\b(?:python3?|py)\\s+(?:-\\S+\\s+)*-c\\b|<<\\s*['\"]?(?:PY|EOF|JS|NODE|SH|PYEOF)",
+
+  "_free_rails_why": "Free ways to test a model call. A blob that names one is not a paid spend. The Gemini free tier is reachable through the OpenAI SDK on a custom baseURL, so the SDK name alone never decides whether a call is paid. A model served on localhost costs nothing. A subscription CLI run in print mode is not API key spend.",
+  "free_rail": "generativelanguage\\.googleapis\\.com|aiplatform\\.googleapis\\.com|\\bGEMINI_API_KEY\\b|\\bGOOGLE_GENERATIVE_AI_API_KEY\\b|(?:localhost|127\\.0\\.0\\.1):\\d+|(?<![\\w/-])claude\\s+(?:-[\\w-]+\\s+)*-p\\b|(?<![\\w/-])claude\\s+--print\\b",
+
+  "_unpaid_path_why": "A path whose purpose is not a paying customer's request. A model call written into one of these is what this guard stops.",
+  "unpaid_path": "(?:^|/)(?:test|tests|__tests__|spec|specs|e2e|integration-tests|fixture|fixtures|__fixtures__|mock|mocks|__mocks__|seed|seeds|bench|benchmark|benchmarks|eval|evals|script|scripts|bin|tools|ops|ci|smoke|warmup|warm-up|healthcheck|health-check|canary|probe|probes|example|examples|demo|demos|sandbox|playground|scratch|\\.github/workflows|\\.circleci|\\.gitlab-ci)(?:/|$)|\\.(?:test|spec|e2e|bench|eval|smoke)\\.[cm]?[jt]sx?$|(?:^|/)(?:test|spec|eval|bench|smoke|seed|warmup|healthcheck)_[^/]*\\.py$|(?:^|/)[^/]*_(?:test|spec|eval|bench)\\.py$|\\.plist$|(?:^|/)LaunchAgents/",
+
+  "_exempt_path_why": "The guard's own files, and rules files that state the rule.",
+  "exempt_path": "(?:/lib/paid_inference|paid_inference_patterns|no-unpaid-inference|(?:^|/)CLAUDE\\.md$|(?:^|/)AGENTS\\.md$)"
+}

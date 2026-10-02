@@ -1,0 +1,31 @@
+{
+  "comment": [
+    "Prompts that name specific things that already exist: a number or ordinal for something the user was shown, a pointing word (these, those, that one), ownership (the ones I picked), substitution words (replacing, in place of), or a literal file name.",
+    "Python regexes, matched case-insensitive. Read by named-artifact-guard, no-silent-substitution and substitution-disclosure-stop.",
+    "Add your own, one regex per line, in <config>/guardhooks/named-artifact-patterns.txt."
+  ],
+  "patterns": [
+    "\\b(?:on|use|take|do|run\\s+\\S+\\s+on)\\s+\\d+\\s*(?:,|and|&|\\+)\\s*\\d+\\b",
+    "\\b(?:option|number|no\\.|#|image|img|photo|shot|version|variant|candidate|file)\\s*#?\\d+\\b",
+    "\\bthe\\s+(?:first|second|third|fourth|fifth|1st|2nd|3rd|4th|5th|last|left|right|middle)\\s+(?:one|two|three|image|images|photo|photos|shot|version|file|render|object)\\b",
+    "\\b(?:just|only)?\\s*\\d+\\s+and\\s+\\d+\\b",
+    "\\b(?:use|with|from|keep|take|do|render|swap|put|drop)\\s+(?:in\\s+)?(?:these|those|this|that|it)\\b",
+    "\\bwith\\s+(?:these|those)\\b",
+    "\\b(?:these|those)\\s+(?:two|three|four|ones|images|photos|files|renders|objects|assets|versions|clips|shots)\\b",
+    "\\b(?:that|this)\\s+(?:exact|same|very)\\s+\\w+",
+    "\\bthe\\s+same\\s+(?:one|ones|image|images|file|files|asset|assets|render|renders|prompt|copy|version)\\b",
+    "\\bthe\\s+ones?\\s+(?:i|you|we)\\s+(?:picked|chose|liked|showed|sent|made|generated|approved|selected|already)\\b",
+    "\\bthe\\s+ones?\\s+(?:from|in|on)\\s+(?:the\\s+)?(?:page|comparison|html|desktop|folder|dir|directory|thread|earlier|before)\\b",
+    "\\bi\\s+(?:picked|chose|like|liked|want|selected|approved)\\s+(?:the|these|those|\\d)",
+    "\\bthe\\s+(?:original|originals|existing|current|approved|previous|old)\\s+(?:one|ones|image|images|file|files|asset|assets|version|versions|prompt|copy|render|renders)?\\b",
+    "\\byou\\s+(?:already\\s+)?(?:showed|sent|made|generated|rendered|built)\\s+(?:me|us)\\b",
+    "\\bthe\\s+ones?\\s+you\\s+just\\b",
+    "\\breplacing\\b",
+    "\\bin\\s+place\\s+of\\b",
+    "\\binstead\\s+of\\s+the\\b",
+    "\\bswap\\s+(?:in|out)\\b",
+    "\\breuse\\s+(?:the|that|these|those)\\b",
+    "\\bkeep\\s+(?:the|that|these|those)\\s+(?:same|exact)?\\s*\\w*\\b",
+    "\\b[\\w./-]+\\.(?:png|jpg|jpeg|webp|svg|gif|mp4|mov|pdf|json|md|txt|html|css|mjs|js|ts|tsx|py)\\b"
+  ]
+}

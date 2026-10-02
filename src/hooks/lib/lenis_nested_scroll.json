@@ -1,0 +1,23 @@
+{
+  "_about": "Pattern list for no-lenis-scroll-trap. `inits` are the ways Lenis is mounted. `satisfied_by` are the options that let a nested scroll box keep its own wheel events.",
+  "min_version": "1.3.0",
+  "inits": [
+    [
+      "a `new Lenis(...)` constructor",
+      "\\bnew\\s+Lenis\\s*\\("
+    ],
+    [
+      "a <ReactLenis> mount",
+      "<ReactLenis\\b"
+    ],
+    [
+      "a useLenis(...) mount",
+      "\\buseLenis\\s*\\("
+    ]
+  ],
+  "satisfied_by": [
+    "allowNestedScroll\\s*:\\s*true",
+    "(^|[^.\\w])prevent\\s*:\\s*(\\(|function|[A-Za-z_$])"
+  ],
+  "block_text": "Lenis must be mounted with `allowNestedScroll: true`.\n\nLenis listens for `wheel` on the document, calls preventDefault() on every event it handles, and scrolls the page. A wheel that starts over an inner overflow:auto box (a code block, a sidebar, a modal) is cancelled before the browser can scroll that box. The box never moves and the page scrolls underneath it. Nothing errors and a screenshot looks correct.\n\nDo this instead (Lenis 1.3.0 or newer):\n  new Lenis({ allowNestedScroll: true, ...the rest })\n\nA `prevent: (node) => ...` option also satisfies this check.\n\nDo not rely on `data-lenis-prevent` on each box. It traps the wheel even when the region is not scrollable, and every new scroll box has to remember it."
+}

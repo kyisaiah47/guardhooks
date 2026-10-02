@@ -1,0 +1,13 @@
+{
+  "id": "no-lenis-scroll-trap",
+  "summary": "Blocks Lenis smooth-scroll mounts that lack allowNestedScroll: true, which freezes inner scroll boxes.",
+  "doc": "This hook denies a write that mounts the Lenis smooth-scroll library (new Lenis(), <ReactLenis>, useLenis()) without `allowNestedScroll: true`. Lenis cancels every wheel event it handles and scrolls the page, so a wheel over an inner scroll box such as a code block, a sidebar or a modal never moves that box. Nothing errors and screenshots look correct. Add `allowNestedScroll: true` (Lenis 1.3.0 or newer), or pass a `prevent` function. Comments are stripped first, so a comment that mentions the option does not count as setting it.",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+      "script": "no-lenis-scroll-trap.py",
+      "timeout": 10
+    }
+  ]
+}

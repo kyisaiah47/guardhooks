@@ -1,0 +1,13 @@
+{
+  "id": "no-reading-measure-cap",
+  "summary": "Blocks a reading-measure max-width (60 to 85ch, or a --measure variable) on content inside a stylesheet.",
+  "doc": "This hook denies a write to a stylesheet or component file that caps content to a reading measure: max-width set to a --measure, --prose, --reading or --readable variable, a max-width between 60ch and 85ch, or a max-width between 550px and 759px in a file with prose-like selectors. Inside a column that the page already bounds, a second narrower cap leaves a dead band of white space beside the content. Set the width once on the page shell or grid track. This is a house layout opinion, so install it only if your pages already bound their content columns.",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+      "script": "no-reading-measure-cap.py",
+      "timeout": 10
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "id": "inject-hard-rules",
+  "summary": "Adds your own short rules file (<config>/hard-rules.md) to every session start, resume, compaction and subagent start.",
+  "doc": "This hook reads hard-rules.md from your Claude Code config directory and adds it to the model's context at SessionStart (startup, resume, clear and compact) and at SubagentStart. Subagents such as Explore and Plan do not read the CLAUDE.md hierarchy, and user-level instructions can drop out of a long session at a compaction, so rules that must always hold need a second path in. Write the file yourself in plain statements and keep it under 9,200 characters, because Claude Code moves longer hook output to a file and the model only sees a preview. When the file is missing or empty the hook does nothing. It blocks nothing.",
+  "hooks": [
+    { "event": "SessionStart", "script": "inject-hard-rules.py", "timeout": 5 },
+    { "event": "SubagentStart", "script": "inject-hard-rules-subagent.py", "timeout": 5 }
+  ]
+}

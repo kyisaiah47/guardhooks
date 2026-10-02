@@ -1,0 +1,71 @@
+{
+  "$comment": "The one list behind no-purchase.py (PreToolUse) and no-purchase-suggestion-stop.py (Stop). The user makes every purchase by hand. Completing a purchase is blocked, and so is offering to make one. Reading availability and price is never blocked.",
+  "allowed": {
+    "$comment": "Reading a price is the whole job and is never blocked. The user needs the name, the price and whether it is available.",
+    "tools": [
+      "check_domain_availability_and_price",
+      "get_purchase_quote",
+      "get_domain_order",
+      "get_domain_price",
+      "get_domain_availability",
+      "get_bulk_availability",
+      "get_bulk_price",
+      "get_tld_price",
+      "list_projects",
+      "get_project"
+    ]
+  },
+  "self_paths": [
+    "no-purchase",
+    "purchase_patterns"
+  ],
+  "tool_names": [
+    {
+      "slug": "buy-tool",
+      "re": "(?:^|__)buy_(?:domains?|single_domain|pro|credits(?:_endpoint)?|addon|plan|seats?|storage|bandwidth)$",
+      "fix": "read the price and report it. The user buys by hand."
+    },
+    {
+      "slug": "buy-tool-generic",
+      "re": "(?:^|__)(?:purchase|checkout|subscribe|upgrade_plan|add_payment_method)(?:_[a-z_]+)?$",
+      "fix": "read the price and report it. The user buys by hand."
+    }
+  ],
+  "shell": [
+    {
+      "slug": "registrar-register",
+      "re": "\\b(?:vercel|gcloud|aws|namecheap|gandi|porkbun|cloudflare|route53)\\b[^\\n|;&]*\\b(?:domains?\\s+(?:registrations?\\s+)?(?:buy|register|purchase|transfer-in)|purchase|checkout)\\b",
+      "fix": "read availability and price and report them. The registration is the user's to run."
+    },
+    {
+      "slug": "stripe-live-spend",
+      "re": "\\bstripe\\b(?=[^\\n|;&]*(?:--live\\b|\\b[sr]k_live_))[^\\n|;&]*\\b(?:subscriptions?\\s+create|charges?\\s+create|payment_intents?\\s+create)\\b",
+      "fix": "a live-mode subscription, charge or payment intent spends real money. Report what it would cost instead. Test mode is allowed."
+    },
+    {
+      "slug": "confirmed-purchase-flag",
+      "re": "\\b(?:buy|purchase|order|renew)\\b[^\\n|;&]{0,40}(?<![\\w-])(?:--yes|--confirm|--force|-y)\\b",
+      "fix": "a flag that confirms a purchase is never the model's to pass. Report the price."
+    }
+  ],
+  "reply": {
+    "$comment": "First-person purchase offers. The subject must be the model doing the buying. A sentence that states a price, or that says the user buys, passes.",
+    "offer": "(?:\\bI(?:'|\\u2019)?(?:ll|m)?\\s+(?:will\\s+|can\\s+|could\\s+|should\\s+|go\\s+ahead\\s+and\\s+)?(?:buy|purchase|grab|register|order|renew|reserve|secure|snag|pick\\s+it\\s+up)\\b|\\bI\\s+will\\s+(?:buy|purchase|grab|register|order|renew|reserve|secure)\\b|\\b(?:want|should|shall)\\s+me\\s+to\\s+(?:buy|purchase|grab|register|order|renew|reserve|secure)\\b|\\bshall\\s+I\\s+(?:buy|purchase|grab|register|order)\\b|\\bshould\\s+I\\s+(?:buy|purchase|grab|register|order|renew)\\b|\\bdo\\s+you\\s+want\\s+me\\s+to\\s+(?:buy|purchase|grab|register|order)\\b|\\bapprove\\s+the\\s+spend\\b|\\bthe\\s+word\\s+and\\s+I(?:'|\\u2019)?ll\\b)",
+    "negation": "\\b(?:never|not|cannot|can't|won't|will\\s+not|do\\s+not|don't|refus\\w*|banned?|bans?|guard\\w*|hook\\w*|rule\\b|(?:he|she|they|you|the\\s+user)\\s+buys?|manually|by\\s+hand|instead|denied|deny|blocked?|would\\s+have)\\b",
+    "positives": [
+      "Want me to grab the domain?",
+      "Should I register it?",
+      "Approve the spend and I'll pick it up.",
+      "I'll buy it once you confirm.",
+      "Say the word and I'll register example.dev."
+    ],
+    "negatives": [
+      "example.dev is available for $9.99/yr",
+      "example.io renews in March at $12/yr.",
+      "Three of the seven are available: example.dev at $9.99, example.io at $32, example.co at $28.",
+      "I will never buy anything; you buy by hand.",
+      "The rule bans an offer to buy, so I will not register it."
+    ]
+  },
+  "block_text": "Never buy anything, and never offer to.\n\nThe user makes every purchase by hand: domains, plans, credits, subscriptions, add-ons and anything else with a price. No amount is small enough to be an exception.\n\nReading availability and price is always allowed, and it is the whole job. Report the name, the price and whether it is available. Then stop. The next step is the user's."
+}

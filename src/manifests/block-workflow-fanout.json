@@ -1,0 +1,8 @@
+{
+  "id": "block-workflow-fanout",
+  "summary": "Denies the Workflow tool, so a request for research never starts a multi-agent run without an explicit yes.",
+  "doc": "This hook denies every call to the Workflow tool. A user who asks for deep or thorough research wants a thorough answer, and a multi-agent run can spend a very large number of tokens before anyone sees a result. The deny message tells the model to read the primary sources itself, run a few targeted searches and write the answer out, and to ask with a cost estimate if the task really needs a fan-out. There is no escape flag. To allow the Workflow tool again, run npx guardhooks remove block-workflow-fanout.",
+  "hooks": [
+    { "event": "PreToolUse", "matcher": "Workflow", "script": "block-workflow-fanout.py", "timeout": 5 }
+  ]
+}

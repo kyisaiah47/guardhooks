@@ -1,0 +1,9 @@
+{
+  "hook_event_name": "PreToolUse",
+  "session_id": "example",
+  "tool_name": "Write",
+  "tool_input": {
+    "file_path": "/tmp/parserail-site/landing/faq.md",
+    "content": "## Is there a free tier?\n\nNo. Credits are bought up front, a $20 pack or a plan from $19/mo, and a call is charged only when it succeeds, so a failed call costs nothing.\n\n## What is a credit?\n\n1 credit = 1\u00a2. Every endpoint has a flat per-task price, an invoice parse is $0.08, and you're only charged when the task succeeds.\n"
+  }
+}

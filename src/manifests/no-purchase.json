@@ -1,0 +1,8 @@
+{
+  "id": "no-purchase",
+  "summary": "Blocks any tool call or shell command that completes a purchase, such as an MCP buy_domain call, a registrar register command or a live-mode charge.",
+  "doc": "This hook runs before every tool call and denies anything that completes a purchase: an MCP tool named buy_domain, buy_credits, checkout, subscribe, add_payment_method and similar, a registrar command that buys, registers or transfers a domain, a live-mode Stripe subscription, charge or payment intent, and a buy, order or renew command passed a confirming flag such as --yes. The user makes every purchase by hand, so the model reports the name, the price and the availability and stops there. Price and availability reads are checked first and are never blocked, and Stripe test mode is allowed. A file that only names a registrar command is documentation and is not blocked, so writing about a purchase on purpose needs no special quoting.",
+  "hooks": [
+    { "event": "PreToolUse", "matcher": "*", "script": "no-purchase.py", "timeout": 10 }
+  ]
+}

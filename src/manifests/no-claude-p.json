@@ -1,0 +1,8 @@
+{
+  "id": "no-claude-p",
+  "summary": "Routes headless model calls through the CLI you chose by blocking headless Claude CLI calls (claude -p, claude --print, a spawn of the claude binary) in files and shell commands.",
+  "doc": "This hook denies a Write, Edit, MultiEdit, NotebookEdit or Bash call whose new text writes or runs a headless Claude CLI call: claude -p, claude --print, claude --model, a spawn of the claude binary, or the argv form ['claude', '-p', ...]. Use it when a project sends every scripted, non-interactive model call through one CLI, so cost, model choice and logging stay in one place. Set the GUARDHOOKS_HEADLESS_CLI environment variable (for example in the env block of settings.json) to the CLI you chose, and the deny message names it. An interactive Claude Code session is never affected, and CLAUDE.md and AGENTS.md are exempt. To quote the command on purpose in a doc, put it in a fenced code block, an inline backtick span, a '>' blockquote or a double-quoted span of twelve characters or more. A Bash command is never treated as a quotation.",
+  "hooks": [
+    { "event": "PreToolUse", "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash", "script": "no-claude-p.py", "timeout": 10 }
+  ]
+}

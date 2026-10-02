@@ -1,0 +1,13 @@
+{
+  "id": "substitution-disclosure-stop",
+  "summary": "Sends a reply back when a generator ran after the user named existing inputs and the reply does not say plainly whether those inputs were used.",
+  "doc": "This Stop hook blocks only when three things are true in the same turn: the prompt named something that already exists, a generator command ran (a script or API that makes new output from a prompt), and the reply contains no sentence stating that what was used is not what was named. Words such as regenerated, re-rendered or at native size describe a process, so they read as a conversion of the named thing and do not count as disclosure. A plain sentence such as \"I did not use the two images you looked at; these are new ones\" clears it. When the generator made something unrelated, run npx guardhooks declare substitution-disclosure-stop \"<what it made and why it replaced nothing>\", which lasts two hours. Your own generator entry points can go in <config>/guardhooks/generator-commands.txt. The hook blocks at most once per turn and three times per session.",
+  "declare": true,
+  "hooks": [
+    {
+      "event": "Stop",
+      "script": "substitution-disclosure-stop.py",
+      "timeout": 15
+    }
+  ]
+}

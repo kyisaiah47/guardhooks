@@ -1,0 +1,8 @@
+{
+  "id": "primary-source-guard",
+  "summary": "On prompts that ask for something to be made or fixed, reminds the model to open the subject itself before working from a description of it.",
+  "doc": "This UserPromptSubmit hook adds a reminder when a prompt asks for something to be made, fixed or rewritten, or says that something is wrong. The reminder tells the model to open the subject itself in the session (the live page, the repo, the file on disk, a real screenshot) instead of briefing itself from alt text, a filename, a tagline, a template constant, the old artifact or memory. Work built from a description looks fine and is wrong in ways nothing reports, so the user ends up as the only check. The hook stays silent on conversational prompts, so it costs nothing there. It blocks nothing.",
+  "hooks": [
+    { "event": "UserPromptSubmit", "script": "primary-source-guard.py", "timeout": 5 }
+  ]
+}

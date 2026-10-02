@@ -1,0 +1,13 @@
+{
+  "id": "skill-scan",
+  "summary": "Scans a skill before a shell command copies it into a skills folder, and denies the copy when the scan finds a red flag.",
+  "doc": "This PreToolUse hook watches shell commands that copy, move, sync or link something into a skills folder (<config>/skills, ~/.claude/skills or a project's .claude/skills). It scans the source first for network calls in code, pipe-to-shell, large encoded blobs, credential paths, rm -rf, instruction-override language such as \"ignore previous instructions\", invisible unicode, and executable or binary files, and denies the copy with a file and line for each finding. A command that clones or downloads straight into a skills folder is denied, because there is nothing to scan yet. A community skill runs with your local permissions, so it is untrusted input. The same script runs by hand: python3 skill-scan.py <skill-dir>. A finding you have read and accepted can be allowlisted in <config>/guardhooks/skill-scan-allowlist.txt as \"<CHECK> <path-glob>\".",
+  "hooks": [
+    {
+      "event": "PreToolUse",
+      "matcher": "Bash",
+      "script": "skill-scan.py",
+      "timeout": 30
+    }
+  ]
+}
